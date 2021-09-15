@@ -6,7 +6,22 @@ import "./styles.css";
 export default class NewBlogPost extends Component {
   constructor(props) {
     super(props);
-    this.state = { text: "" };
+    this.state = {
+      post: {
+        category: "",
+        title: "",
+        cover: "ARTICLE COVER (IMAGE LINK)",
+        readTime: {
+          value: 2,
+          unit: "minute",
+        },
+        author: {
+          name: "AUTHOR AVATAR NAME",
+          avatar: "AUTHOR AVATAR LINK",
+        },
+        content: "",
+      },
+    };
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -14,13 +29,46 @@ export default class NewBlogPost extends Component {
     this.setState({ text: value });
   }
 
+  sendData = async (e) => {
+    e.preventDefault();
+    try {
+      let response = await fetch("http://localhost:3001/blogPosts/", {
+        method: "POST",
+        body: JSON.stringify(this.state.post),
+        headers: {
+          "Content-type": "application/json",
+        },
+      });
+      if (response.ok) {
+        alert("Comment was sent!");
+      } else {
+        console.log("error");
+        alert("something went wrong");
+      }
+    } catch (error) {
+      console.log("error");
+    }
+  };
+
   render() {
     return (
       <Container className="new-blog-container">
-        <Form className="mt-5">
+        <Form className="mt-5" onSubmit={(e) => this.sendData(e)}>
           <Form.Group controlId="blog-form" className="mt-3">
             <Form.Label>Title</Form.Label>
-            <Form.Control size="lg" placeholder="Title" />
+            <Form.Control
+              size="lg"
+              placeholder="Title"
+              value={this.state.post.title}
+              onChange={(e) =>
+                this.setState({
+                  post: {
+                    ...this.state.post,
+                    title: e.target.value,
+                  },
+                })
+              }
+            />
           </Form.Group>
           <Form.Group controlId="blog-category" className="mt-3">
             <Form.Label>Category</Form.Label>
@@ -35,9 +83,18 @@ export default class NewBlogPost extends Component {
           <Form.Group controlId="blog-content" className="mt-3">
             <Form.Label>Blog Content</Form.Label>
             <ReactQuill
-              value={this.state.text}
-              onChange={this.handleChange}
+              // value={this.state.text}
+              // onChange={this.handleChange}
               className="new-blog-content"
+              value={this.state.post.content}
+              onChange={(e) =>
+                this.setState({
+                  post: {
+                    ...this.state.post,
+                    content: e,
+                  },
+                })
+              }
             />
           </Form.Group>
           <Form.Group className="d-flex mt-3 justify-content-end">
