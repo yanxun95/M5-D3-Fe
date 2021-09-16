@@ -10,7 +10,7 @@ export default class NewBlogPost extends Component {
       post: {
         category: "",
         title: "",
-        cover: "ARTICLE COVER (IMAGE LINK)",
+        cover: "",
         readTime: {
           value: 2,
           unit: "minute",
@@ -20,7 +20,11 @@ export default class NewBlogPost extends Component {
           avatar: "AUTHOR AVATAR LINK",
         },
         content: "",
+        comments: [],
+        postImgPath: "",
       },
+      coverImages: null,
+      profileImages: null,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -97,6 +101,28 @@ export default class NewBlogPost extends Component {
               }
             />
           </Form.Group>
+          <Form>
+            <Form.Group>
+              <Form.File
+                id="exampleFormControlFile1"
+                label="User profile"
+                value={this.state.post.content}
+                onChange={(e) =>
+                  this.setState({
+                    post: {
+                      ...this.state.post,
+                    },
+                    profileImages: e.target.files[0],
+                  })
+                }
+              />
+            </Form.Group>
+          </Form>
+          <Form>
+            <Form.Group>
+              <Form.File id="exampleFormControlFile1" label="Blog post cover" />
+            </Form.Group>
+          </Form>
           <Form.Group className="d-flex mt-3 justify-content-end">
             <Button type="reset" size="lg" variant="outline-dark">
               Reset
