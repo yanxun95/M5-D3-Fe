@@ -11,7 +11,7 @@ function App() {
     <BrowserRouter>
       <NavBar />
       <Route path="/" exact component={Home} />
-      <Route path="/blog/:id" exact component={Blog} />
+      <Route path="/blogPosts/:id" exact component={Blog} />
       <Route path="/new" exact component={NewBlogPost} />
       <Footer />
     </BrowserRouter>
