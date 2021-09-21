@@ -21,7 +21,7 @@ export default class NewBlogPost extends Component {
         },
         content: "",
         comments: [],
-        postImgPath: "",
+        coverImages: "",
       },
       coverImages: null,
       profileImages: null,
@@ -41,6 +41,30 @@ export default class NewBlogPost extends Component {
         body: JSON.stringify(this.state.post),
         headers: {
           "Content-type": "application/json",
+        },
+      });
+      if (response.ok) {
+        console.log(response);
+        //here have user id
+        alert("Comment was sent!");
+      } else {
+        console.log("error");
+        alert("something went wrong");
+      }
+    } catch (error) {
+      console.log("error");
+    }
+  };
+
+  upLoadProfilePhoto = async (e) => {
+    try {
+      let data = new FormData();
+      data.append("profilePic", this.state.profileImages);
+      let response = await fetch("http://localhost:3001/blogPosts/", {
+        method: "POST",
+        body: data,
+        headers: {
+          "Content-type": "multipart/form-data",
         },
       });
       if (response.ok) {
@@ -101,7 +125,24 @@ export default class NewBlogPost extends Component {
               }
             />
           </Form.Group>
-          <Form>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Picture</Form.Label>
+            <Form.Control
+              onChange={(e) => {
+                this.setState({
+                  post: {
+                    ...this.state.post,
+                  },
+                  profileImages: e.target.files[0],
+                });
+              }}
+              accept="picture/*"
+              type="file"
+              placeholder="picture"
+              required
+            />
+          </Form.Group>
+          {/* <Form>
             <Form.Group>
               <Form.File
                 id="exampleFormControlFile1"
@@ -117,7 +158,7 @@ export default class NewBlogPost extends Component {
                 }
               />
             </Form.Group>
-          </Form>
+          </Form> */}
           <Form>
             <Form.Group>
               <Form.File id="exampleFormControlFile1" label="Blog post cover" />
