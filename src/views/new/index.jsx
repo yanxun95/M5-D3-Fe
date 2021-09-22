@@ -36,7 +36,7 @@ export default class NewBlogPost extends Component {
   sendData = async (e) => {
     e.preventDefault();
     try {
-      let response = await fetch("http://localhost:3001/blogPosts/", {
+      let response = await fetch(process.env.REACT_APP_BE_URL + "/blogPosts/", {
         method: "POST",
         body: JSON.stringify(this.state.post),
         headers: {
@@ -46,28 +46,6 @@ export default class NewBlogPost extends Component {
       if (response.ok) {
         console.log(response);
         //here have user id
-        alert("Comment was sent!");
-      } else {
-        console.log("error");
-        alert("something went wrong");
-      }
-    } catch (error) {
-      console.log("error");
-    }
-  };
-
-  upLoadProfilePhoto = async (e) => {
-    try {
-      let data = new FormData();
-      data.append("profilePic", this.state.profileImages);
-      let response = await fetch("http://localhost:3001/blogPosts/", {
-        method: "POST",
-        body: data,
-        headers: {
-          "Content-type": "multipart/form-data",
-        },
-      });
-      if (response.ok) {
         alert("Comment was sent!");
       } else {
         console.log("error");
@@ -142,23 +120,6 @@ export default class NewBlogPost extends Component {
               required
             />
           </Form.Group>
-          {/* <Form>
-            <Form.Group>
-              <Form.File
-                id="exampleFormControlFile1"
-                label="User profile"
-                value={this.state.post.content}
-                onChange={(e) =>
-                  this.setState({
-                    post: {
-                      ...this.state.post,
-                    },
-                    profileImages: e.target.files[0],
-                  })
-                }
-              />
-            </Form.Group>
-          </Form> */}
           <Form>
             <Form.Group>
               <Form.File id="exampleFormControlFile1" label="Blog post cover" />
