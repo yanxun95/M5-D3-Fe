@@ -17,7 +17,7 @@ class Blog extends Component {
     this.setState({ loading: true });
     try {
       let response = await fetch(
-        "http://localhost:3001/blogPosts/" + this.state.blogID
+        process.env.REACT_APP_BE_URL + "/blogPosts/" + this.state.blogID
       );
       if (response.ok) {
         let data = await response.json();
@@ -34,14 +34,13 @@ class Blog extends Component {
     }
   };
 
-  // if you want console log the state better to use component did update then console log, cuz if console log in render sometimes slow
   componentDidUpdate = (prevProp, prevState) => {
     if (prevState.postCover !== this.state.postCover) {
       console.log("=======>", this.state.postCover);
     }
   };
 
-  //create a function to send the data with     e.preventDefault();
+  // using cloudinary
 
   sendUserImg = async (e) => {
     e.preventDefault();
@@ -52,7 +51,10 @@ class Blog extends Component {
 
     try {
       let response = await fetch(
-        "http://localhost:3001/blogPosts/" + this.state.blogID + "/uploadCover",
+        process.env.REACT_APP_BE_URL +
+          "/blogPosts/" +
+          this.state.blogID +
+          "/uploadCover",
         {
           method: "post",
           body: formData,

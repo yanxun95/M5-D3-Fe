@@ -12,11 +12,11 @@ export default class BlogItem extends Component {
   // };
 
   render() {
-    const { title, cover, author, id } = this.props;
+    const { title, coverImg, author, id } = this.props;
     return (
       <Link to={`/blogPosts/${id}`} className="blog-link">
         <Card className="blog-card">
-          <Card.Img variant="top" src={cover} className="blog-cover" />
+          <Card.Img variant="top" src={coverImg} className="blog-cover" />
           <Card.Body>
             <Card.Title>{title}</Card.Title>
           </Card.Body>
