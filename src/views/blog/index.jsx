@@ -70,6 +70,21 @@ class Blog extends Component {
     }
   };
 
+  downloadPdf = async () => {
+    try {
+      let response = await fetch(
+        "http://localhost:3001/blogPosts/" + this.state.blogID + "/downloadPdf"
+      );
+      if (response.ok) {
+        console.log(response);
+      } else {
+        console.log("error on download");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   render() {
     if (this.state.loading) {
       return <div>loading</div>;
@@ -128,6 +143,13 @@ class Blog extends Component {
                   Update cover picture
                 </Button>
               </Form>
+              <Button
+                variant="primary"
+                className="mt-2"
+                href={`http://localhost:3001/blogPosts/${this.state.blogID}/downloadPdf`}
+              >
+                Download
+              </Button>
             </div>
           </Container>
         </div>
