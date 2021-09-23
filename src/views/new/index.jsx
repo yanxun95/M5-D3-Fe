@@ -103,28 +103,6 @@ export default class NewBlogPost extends Component {
               }
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Picture</Form.Label>
-            <Form.Control
-              onChange={(e) => {
-                this.setState({
-                  post: {
-                    ...this.state.post,
-                  },
-                  profileImages: e.target.files[0],
-                });
-              }}
-              accept="picture/*"
-              type="file"
-              placeholder="picture"
-              required
-            />
-          </Form.Group>
-          <Form>
-            <Form.Group>
-              <Form.File id="exampleFormControlFile1" label="Blog post cover" />
-            </Form.Group>
-          </Form>
           <Form.Group className="d-flex mt-3 justify-content-end">
             <Button type="reset" size="lg" variant="outline-dark">
               Reset
